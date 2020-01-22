@@ -24,7 +24,7 @@ import dev.fujioka.juan.presentation.dto.empresa.EmpresaRequestTO;
 import dev.fujioka.juan.presentation.dto.empresa.EmpresaResponseTO;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/empresas")
 public class EmpresaController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class EmpresaController {
 	@Autowired
 	private ResponseServiceImpl responseService;
 
-	@GetMapping("/empresas/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ResponseTO<EmpresaResponseTO>> buscar(@PathVariable Long id) {
 		Empresa empresa = empresaService.buscar(id);
 		EmpresaResponseTO empresaResponseTO = converterService.converter(empresa, EmpresaResponseTO.class);
@@ -44,7 +44,7 @@ public class EmpresaController {
 
 	}
 
-	@PostMapping("/empresas")
+	@PostMapping
 	public ResponseEntity<ResponseTO<EmpresaResponseTO>> salvar(@RequestBody EmpresaRequestTO EmpresaRequestTO) {
 		Empresa empresa = converterService.converter(EmpresaRequestTO, Empresa.class);
 		Empresa empresaSalvo = empresaService.salvar(empresa);
@@ -53,15 +53,15 @@ public class EmpresaController {
 
 	}
 
-	@GetMapping("/empresas")
-	public ResponseEntity<ResponseTO<Page<EmpresaResponseTO>>> listarTodos(Pageable pagina) {
+	@GetMapping
+	public ResponseEntity<ResponseTO<Page<EmpresaResponseTO>>> listar(Pageable pagina) {
 		Page<Empresa> empresas = empresaService.listarTodos(pagina);
 		Page<EmpresaResponseTO> empresasResponseTO = converterService.converter(empresas, EmpresaResponseTO.class);
 		return responseService.ok(empresasResponseTO);
 
 	}
 
-	@PutMapping("/empresas/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<ResponseTO<EmpresaResponseTO>> alterar(@PathVariable Long id,
 			@RequestBody EmpresaRequestTO EmpresaRequestTO) {
 		Empresa empresa = converterService.converter(EmpresaRequestTO, Empresa.class);
@@ -71,7 +71,7 @@ public class EmpresaController {
 
 	}
 
-	@DeleteMapping("/empresas/{id}")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long id) {
 		empresaService.deletar(id);

@@ -24,7 +24,7 @@ import dev.fujioka.juan.presentation.dto.lancamento.LancamentoRequestTO;
 import dev.fujioka.juan.presentation.dto.lancamento.LancamentoResponseTO;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/lancamentos")
 public class LancamentoController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class LancamentoController {
 	@Autowired
 	private ResponseServiceImpl responseService;
 
-	@GetMapping("/lancamentos/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ResponseTO<LancamentoResponseTO>> buscar(@PathVariable Long id) {
 		Lancamento lancamento = lancamentoService.buscar(id);
 		LancamentoResponseTO lancamentoResponseTO = converterService.converter(lancamento, LancamentoResponseTO.class);
@@ -44,7 +44,7 @@ public class LancamentoController {
 
 	}
 
-	@PostMapping("/lancamentos")
+	@PostMapping
 	public ResponseEntity<ResponseTO<LancamentoResponseTO>> salvar(@RequestBody LancamentoRequestTO lancamentoRequestTO) {
 		Lancamento lancamento = converterService.converter(lancamentoRequestTO, Lancamento.class);
 		Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);
@@ -54,8 +54,8 @@ public class LancamentoController {
 
 	}
 
-	@GetMapping("/lancamentos")
-	public ResponseEntity<ResponseTO<Page<LancamentoResponseTO>>> listarTodos(Pageable pagina) {
+	@GetMapping
+	public ResponseEntity<ResponseTO<Page<LancamentoResponseTO>>> listar(Pageable pagina) {
 		Page<Lancamento> lancamentos = lancamentoService.listarTodos(pagina);
 		Page<LancamentoResponseTO> lancamentosResponseTO = converterService.converter(lancamentos,
 				LancamentoResponseTO.class);
@@ -63,7 +63,7 @@ public class LancamentoController {
 
 	}
 
-	@PutMapping("/lancamentos/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<ResponseTO<LancamentoResponseTO>> alterar(@PathVariable Long id,
 			@RequestBody LancamentoRequestTO lancamentoRequestTO) {
 		Lancamento lancamento = converterService.converter(lancamentoRequestTO, Lancamento.class);
@@ -74,7 +74,7 @@ public class LancamentoController {
 
 	}
 
-	@DeleteMapping("/lancamentos/{id}")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long id) {
 		lancamentoService.deletar(id);

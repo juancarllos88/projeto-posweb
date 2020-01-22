@@ -24,7 +24,7 @@ import dev.fujioka.juan.presentation.dto.funcionario.FuncionarioRequestTO;
 import dev.fujioka.juan.presentation.dto.funcionario.FuncionarioResponseTO;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/funcionarios")
 public class FuncionarioController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class FuncionarioController {
 	@Autowired
 	private ResponseServiceImpl responseService;
 
-	@GetMapping("/funcionarios/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ResponseTO<FuncionarioResponseTO>> buscar(@PathVariable Long id) {
 		Funcionario funcionario = funcionarioService.buscar(id);
 		FuncionarioResponseTO funcionarioResponseTO = converterService.converter(funcionario,
@@ -45,7 +45,7 @@ public class FuncionarioController {
 
 	}
 
-	@PostMapping("/funcionarios")
+	@PostMapping
 	public ResponseEntity<ResponseTO<FuncionarioResponseTO>> salvar(@RequestBody FuncionarioRequestTO funcionarioRequestTO) {
 		Funcionario funcionario = converterService.converter(funcionarioRequestTO, Funcionario.class);
 		Funcionario funcionarioSalvo = funcionarioService.salvar(funcionario);
@@ -55,8 +55,8 @@ public class FuncionarioController {
 
 	}
 
-	@GetMapping("/funcionarios")
-	public ResponseEntity<ResponseTO<Page<FuncionarioResponseTO>>> listarTodos(Pageable pagina) {
+	@GetMapping
+	public ResponseEntity<ResponseTO<Page<FuncionarioResponseTO>>> listar(Pageable pagina) {
 		Page<Funcionario> funcionarios = funcionarioService.listarTodos(pagina);
 		Page<FuncionarioResponseTO> funcionariosResponseTO = converterService.converter(funcionarios,
 				FuncionarioResponseTO.class);
@@ -64,7 +64,7 @@ public class FuncionarioController {
 
 	}
 
-	@PutMapping("/funcionarios/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<ResponseTO<FuncionarioResponseTO>> alterar(@PathVariable Long id,
 			@RequestBody FuncionarioRequestTO funcionarioRequestTO) {
 		Funcionario funcionario = converterService.converter(funcionarioRequestTO, Funcionario.class);
@@ -75,7 +75,7 @@ public class FuncionarioController {
 
 	}
 
-	@DeleteMapping("/funcionarios/{id}")
+	@DeleteMapping("/{id}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long id) {
 		funcionarioService.deletar(id);
