@@ -1,5 +1,7 @@
 package dev.fujioka.juan.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +48,7 @@ public class FuncionarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseTO<FuncionarioResponseTO>> salvar(@RequestBody FuncionarioRequestTO funcionarioRequestTO) {
+	public ResponseEntity<ResponseTO<FuncionarioResponseTO>> salvar(@RequestBody @Valid FuncionarioRequestTO funcionarioRequestTO) {
 		Funcionario funcionario = converterService.converter(funcionarioRequestTO, Funcionario.class);
 		Funcionario funcionarioSalvo = funcionarioService.salvar(funcionario);
 		FuncionarioResponseTO funcionarioResponseTO = converterService.converter(funcionarioSalvo,

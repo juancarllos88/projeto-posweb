@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import dev.fujioka.juan.application.service.exception.EmpresaNaoEncontradaException;
 import dev.fujioka.juan.application.service.exception.InformacaoNaoEncontradaException;
 import dev.fujioka.juan.infrastructure.service.MessageServiceImpl;
 import dev.fujioka.juan.presentation.dto.ResponseTO;
@@ -34,6 +35,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 	public ResponseEntity<Object> handleInformacaoNaoEncontradaException(InformacaoNaoEncontradaException ex,
 			WebRequest request) {
 		return handleException(ex, HttpStatus.NOT_FOUND, request, "recurso.informacao-nao-encontrada");
+	}
+	
+	@ExceptionHandler({ EmpresaNaoEncontradaException.class })
+	public ResponseEntity<Object> handleEmpresaNaoEncontradaException(EmpresaNaoEncontradaException ex,
+			WebRequest request) {
+		return handleException(ex, HttpStatus.NOT_FOUND, request, "funcionario.empresa-nao-encontrada");
 	}
 
 	@Override

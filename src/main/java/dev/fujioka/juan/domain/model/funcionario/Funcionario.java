@@ -50,9 +50,9 @@ public class Funcionario implements Serializable {
 	@Column(name = "valor_hora")
 	private BigDecimal valorHora;
 	@Column(name = "qtd_horas_trabalho_dia")
-	private Float qtdHorasTrabalhoDia;
+	private Double qtdHorasTrabalhoDia;
 	@Column(name = "qtd_horas_almoco")
-	private Float qtdHorasAlmoco;
+	private Double qtdHorasAlmoco;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "perfil")
 	private Perfil perfil;

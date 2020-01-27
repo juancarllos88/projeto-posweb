@@ -1,5 +1,7 @@
 package dev.fujioka.juan.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,7 +47,7 @@ public class EmpresaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseTO<EmpresaResponseTO>> salvar(@RequestBody EmpresaRequestTO EmpresaRequestTO) {
+	public ResponseEntity<ResponseTO<EmpresaResponseTO>> salvar(@RequestBody @Valid EmpresaRequestTO EmpresaRequestTO) {
 		Empresa empresa = converterService.converter(EmpresaRequestTO, Empresa.class);
 		Empresa empresaSalvo = empresaService.salvar(empresa);
 		EmpresaResponseTO empresaResponseTO = converterService.converter(empresaSalvo, EmpresaResponseTO.class);
@@ -63,7 +65,7 @@ public class EmpresaController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ResponseTO<EmpresaResponseTO>> alterar(@PathVariable Long id,
-			@RequestBody EmpresaRequestTO EmpresaRequestTO) {
+			@RequestBody @Valid EmpresaRequestTO EmpresaRequestTO) {
 		Empresa empresa = converterService.converter(EmpresaRequestTO, Empresa.class);
 		Empresa empresaAtualizado = empresaService.atualizar(id, empresa);
 		EmpresaResponseTO empresaResponseTO = converterService.converter(empresaAtualizado, EmpresaResponseTO.class);

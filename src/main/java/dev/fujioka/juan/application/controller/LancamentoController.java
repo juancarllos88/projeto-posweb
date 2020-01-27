@@ -1,5 +1,7 @@
 package dev.fujioka.juan.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,7 +47,7 @@ public class LancamentoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseTO<LancamentoResponseTO>> salvar(@RequestBody LancamentoRequestTO lancamentoRequestTO) {
+	public ResponseEntity<ResponseTO<LancamentoResponseTO>> salvar(@RequestBody @Valid LancamentoRequestTO lancamentoRequestTO) {
 		Lancamento lancamento = converterService.converter(lancamentoRequestTO, Lancamento.class);
 		Lancamento lancamentoSalvo = lancamentoService.salvar(lancamento);
 		LancamentoResponseTO lancamentoResponseTO = converterService.converter(lancamentoSalvo,
@@ -65,7 +67,7 @@ public class LancamentoController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ResponseTO<LancamentoResponseTO>> alterar(@PathVariable Long id,
-			@RequestBody LancamentoRequestTO lancamentoRequestTO) {
+			@RequestBody @Valid LancamentoRequestTO lancamentoRequestTO) {
 		Lancamento lancamento = converterService.converter(lancamentoRequestTO, Lancamento.class);
 		Lancamento lancamentoAtualizado = lancamentoService.atualizar(id, lancamento);
 		LancamentoResponseTO lancamentoResponseTO = converterService.converter(lancamentoAtualizado,
